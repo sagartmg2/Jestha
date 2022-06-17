@@ -13,6 +13,26 @@ git add <file path> // to add our single file for commit
 git add . // adds all of our untracked files
 
 
+git commit -m "short_message"
+
+// git commit -m "short_message" -m "detailed_message"
+
+git branch  // local branch 
+git branch -r  // remote branch
+
+
+// git checkout -b <new_branch_name>
+git checkout -b javascript
+
+
+// git push origin <branch_name>
+git push origin javascript
+
+
+
+git restore --staged git.js
+
+
 
 
 
