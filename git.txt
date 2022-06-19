@@ -1,10 +1,13 @@
 git init// initialize git. creates .git folder
 
 
-git remote add origin <github_repo_url>  // links our remote reposotory and local reposotory
+// git remote add origin <github_repo_url>  // links our remote reposotory and local reposotory
+git remote add origin https://github.com/sagartmg2/Jestha 
 
 git remote  -v  // to check our linked remote repo 
 
+
+git clone <github_repo_url>
 
 git status // to check our changes
 
