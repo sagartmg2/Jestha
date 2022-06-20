@@ -7,6 +7,12 @@ git remote add origin https://github.com/sagartmg2/Jestha
 git remote  -v  // to check our linked remote repo 
 
 
+
+
+
+
+
+
 git clone <github_repo_url>
 
 git status // to check our changes
