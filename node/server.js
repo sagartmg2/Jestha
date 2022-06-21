@@ -21,6 +21,7 @@
 // import fs from "fs"
 
 
+
 // common JS
 const fs = require("fs")
 
@@ -52,19 +53,66 @@ const fs = require("fs")
 //  1 byte =  8 bits (0,1)
 
 
-const path = require("path")
+// const path = require("path")
 
-console.log(__filename);
-console.log(path.basename(__filename));
-console.log(path.extname(__filename));
-console.log(path.join("custom",__filename));
+// console.log(__filename);
+// console.log(path.basename(__filename));
+// console.log(path.extname(__filename));
+// console.log(path.join("custom",__filename));
+// console.log(path.parse(__filename));
+
+
+
+
+/* 
+
+HTTP VERBS/METHODS
+
+
+GET
+post  
+PUT / PATCH    
+DELETE
+
+ */
 
 
 // create read update delete
-// C 
-// R
-// U
-// D
+// C -  CREATE
+// R    READ
+// U    UPDATE
+// D    DELETE
+
+
+const auth = require("./auth.js")
+
+
+console.log(12222222222);
+// console.log(auth);
+// // console.log({auth });
+
+// // auth();
+
+// auth.signup()
+// auth.login();
+
+//http module
+
+
+const http = require("http")
+
+const server = http.createServer((req, res) => {
+
+    console.log("request accepted");
+
+    res.write("request accepted")
+    res.end();
+
+})
+
+server.listen(8000, () => {
+    console.log("listening");
+})
 
 
 
