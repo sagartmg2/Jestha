@@ -99,14 +99,66 @@ console.log(12222222222);
 //http module
 
 
+const EventEmitter = require("events")
+
+const event = new EventEmitter();
+
+event.on("custom", () => {
+    console.log("inside custom listener ");
+})
+
+event.emit("custom")
+
+
+
 const http = require("http")
+
+const { URL } = require("url");
+
+let tods = [];
 
 const server = http.createServer((req, res) => {
 
-    console.log("request accepted");
+    console.log(req.url)
+    res.writeHead(200, {
+        'Content-Type': 'application/json'
+    });
 
-    res.write("request accepted")
-    res.end();
+    // console.log(req.headers.host + req.url)
+
+    // let url_obj = new URL(req.headers.host + req.url)
+    // console.log(url_obj)
+    // id = url_obj.searchParams.get("id")
+    // console.log({ id });
+
+
+    // return;
+
+    if (req.url == "/users" && req.method == "GET") {
+        res.write(JSON.stringify({ msg: "welcome to users page" }))
+        return res.end();
+    } else if (req.url == "/users" && req.method == "POST") {
+
+        req.on('data', chunk => {
+            console.log(`Data chunk available: ${chunk}`);
+            // res.write(JSON.stringify(chunk));
+            res.write(chunk);
+            return res.end();
+
+        });
+
+        // res.write(JSON.stringify({ msg: "welcome to POST users page" }))
+    }
+    else if (req.url == "/contact") {
+        res.write(JSON.stringify({ msg: "welcome to contact page" }))
+        return res.end();
+    } else {
+        res.write(JSON.stringify({ msg: "404 page not found" }))
+        return res.end();
+    }
+
+    // res.write(JSON.stringify({ msg: "request accepted" }))
+    // res.end();
 
 })
 
