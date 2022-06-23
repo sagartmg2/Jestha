@@ -120,6 +120,7 @@ let tods = [];
 const server = http.createServer((req, res) => {
 
     console.log(req.url)
+
     res.writeHead(200, {
         'Content-Type': 'application/json'
     });
@@ -152,7 +153,19 @@ const server = http.createServer((req, res) => {
     else if (req.url == "/contact") {
         res.write(JSON.stringify({ msg: "welcome to contact page" }))
         return res.end();
-    } else {
+    } else if (req.url == "/custom-html") {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        // res.write("req acpt")
+        const html = fs.readFileSync("./index.html")
+        console.log(req.url);
+        res.end(html);
+    } else if (req.url == "/custom.js") {
+        // res.writeHead(200, { 'Content-Type': 'text/html' });
+        // res.write("req acpt")
+        const html = fs.readFileSync("./custom.js")
+        console.log(req.url);
+        res.end(html);
+    }  else {
         res.write(JSON.stringify({ msg: "404 page not found" }))
         return res.end();
     }
