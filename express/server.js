@@ -1,13 +1,26 @@
 
 const express = require('express')
 const app = express()
+
+// import { engine } from 'express-handlebars';
+const { engine } = require('express-handlebars');
+
+
+
+
 // var bodyParser = require('body-parser')
 
 
-app.use(express.static('public'))
+// app.use(express.static('public'))
 app.use(express.static('storage'))
 
 app.use(express.json())
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+
 
 // built - in middleware
 
@@ -44,12 +57,42 @@ const auth_middleware = (req, res, next) => {
     }
 }
 
+// C
+// R
+// U
+// D
 
-app.use(auth_middleware);
+const fs = require("fs");
+const { type } = require('os');
 
-app.post("/", (req, res) => {
 
+// app.use(auth_middleware);
+
+app.get('/handlebars', (req, res) => {
+
+    // let users = User.find({})
+
+    let users = fs.readFileSync("./users.json", "utf-8")
+
+    // let users = fs.readFile("./server.js",() => {
+
+    // })
+    // 
+
+    // console.log({ users });
+    // console.log (  typeof( users) );
+
+    res.render('home', {
+        layout:"side",
+        name: "John",
+        users: JSON.parse(users),
+    });
+
+});
+
+app.post("/", auth_middleware, (req, res) => {
     console.log("body1", req.body)
+    // User.insertOne(req.body);
     res.send("POST")
 })
 
