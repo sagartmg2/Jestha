@@ -124,8 +124,8 @@ author1 = {
         {
             name: "awd1"
         }
-    ]
-
+    ],
+    website:"auth1.com"
 }
 
 author2 = {}
@@ -141,9 +141,18 @@ product1 = {
 
 
 // ecommerce
+
+// products 
+    {
+        price:100
+    }
+
 // sales collections
 
 sale_1 = {
+    // products[
+    //     ObjectId("product-id")
+    // ],
     products: [{
         name,
         price,
@@ -170,6 +179,33 @@ sale_1 = {
 
 ObjectId("62bd75b251cd41eeec3f2861"),
 ObjectId("62bd75b251cd41eeec3f2862")
+
+
+author1 ={
+    name,
+    website
+}
+
+book1 ={
+    name:"book 1",
+    authors:[
+        {
+            name:123,
+            website:"author1.com"
+        },
+        ObjectId("author-id")
+    ]
+}
+
+book2 ={
+    name:"book 2",
+    authors:[
+        {
+            name:123,
+            website:"author1.com"
+        }
+    ]
+}
 
 
 db.books.insertMany([
@@ -201,6 +237,68 @@ db.books.aggregate([
 $match:{
 
 }
+
+
+// Aggregation  
+// Aggregation Framework  
+// Aggregation Pipeline  
+
+
+// db.books.find
+// db.books.aggregate([ <filter>, <filter> ])
+
+// db.books.aggregate([ <pipeline>, <pipeline> ])
+
+
+// {
+//     $match:{ name:{$eq:"subtle"} }
+// },
+
+db.books.aggregate([
+    {
+        $match:{
+            _id:{$eq:ObjectId("62bec92f25e9e8b982fb2c1a")}
+        }
+    },
+    {
+        $lookup:{
+            from:"authors",
+            localField:"authors",
+            foreignField:"_id",
+            as:"authors"
+        }
+    },
+    {
+        //  TODO: identify the pipeline that return single object from $lookup pipeline instead of array. 
+    }
+])
+
+
+DATA - TYPES 
+//  everyting that json supports,
+
+// ObjectId
+// Timestamp
+// IsoDate
+
+
+
+authors = db.authors.find({})
+
+
+db.books.insert({
+    name:"Eat the Frog AGAIN",
+    authors: [
+        ObjectId("62bd75b251cd41eeec3f2861"),
+         ObjectId("62bd75b251cd41eeec3f2862"),
+      ]
+})
+
+
+
+
+
+
 
 
 
