@@ -2,9 +2,19 @@
 const express = require('express')
 const app = express()
 
+const mongoose = require('mongoose');
 // import { engine } from 'express-handlebars';
 const { engine } = require('express-handlebars');
 
+
+// mongoose.connect('mongodb://localhost:27017/<datbase_name>');
+mongoose.connect('mongodb://localhost:27017/school')
+    .then(res => {
+        console.log("mongodb connencted")
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
 
 
@@ -83,7 +93,7 @@ app.get('/handlebars', (req, res) => {
     // console.log (  typeof( users) );
 
     res.render('home', {
-        layout:"side",
+        layout: "side",
         name: "John",
         users: JSON.parse(users),
     });

@@ -125,7 +125,7 @@ author1 = {
             name: "awd1"
         }
     ],
-    website:"auth1.com"
+    website: "auth1.com"
 }
 
 author2 = {}
@@ -143,9 +143,9 @@ product1 = {
 // ecommerce
 
 // products 
-    {
-        price:100
-    }
+{
+    price: 100
+}
 
 // sales collections
 
@@ -178,31 +178,31 @@ sale_1 = {
 
 
 ObjectId("62bd75b251cd41eeec3f2861"),
-ObjectId("62bd75b251cd41eeec3f2862")
+    ObjectId("62bd75b251cd41eeec3f2862")
 
 
-author1 ={
+author1 = {
     name,
     website
 }
 
-book1 ={
-    name:"book 1",
-    authors:[
+book1 = {
+    name: "book 1",
+    authors: [
         {
-            name:123,
-            website:"author1.com"
+            name: 123,
+            website: "author1.com"
         },
         ObjectId("author-id")
     ]
 }
 
-book2 ={
-    name:"book 2",
-    authors:[
+book2 = {
+    name: "book 2",
+    authors: [
         {
-            name:123,
-            website:"author1.com"
+            name: 123,
+            website: "author1.com"
         }
     ]
 }
@@ -210,12 +210,12 @@ book2 ={
 
 db.books.insertMany([
     {
-        name:"subtle",
-        author:ObjectId("62bd75b251cd41eeec3f2861")
+        name: "subtle",
+        author: ObjectId("62bd75b251cd41eeec3f2861")
     },
     {
-        name:"subtle",
-        author:ObjectId("62bd75b251cd41eeec3f2862")
+        name: "subtle",
+        author: ObjectId("62bd75b251cd41eeec3f2862")
     }
 ])
 
@@ -225,16 +225,16 @@ db.books.insertMany([
 
 db.books.aggregate([
     {
-        $lookup:{
-            from:"authors",
-            localField:"author",
-            foreignField:"_id",
-            as:"authors"
+        $lookup: {
+            from: "authors",
+            localField: "author",
+            foreignField: "_id",
+            as: "authors"
         }
     }
 ])
 
-$match:{
+$match: {
 
 }
 
@@ -256,47 +256,69 @@ $match:{
 
 db.books.aggregate([
     {
-        $match:{
-            _id:{$eq:ObjectId("62bec92f25e9e8b982fb2c1a")}
+        $match: {
+            _id: { $eq: ObjectId("62bec92f25e9e8b982fb2c1a") }
         }
     },
     {
-        $lookup:{
-            from:"authors",
-            localField:"authors",
-            foreignField:"_id",
-            as:"authors"
+        $lookup: {
+            from: "authors",
+            localField: "authors",
+            foreignField: "_id",
+            as: "authors"
         }
     },
     {
-        //  TODO: identify the pipeline that return single object from $lookup pipeline instead of array. 
-    }
+        $unwind: '$authors'
+    },
+    {
+        $match: {
+            "authors.name": { $eq: "Mark" }
+        }
+    },
 ])
 
+// {
+//     $project:{}
+// }
 
-DATA - TYPES 
+// {
+//     //  TODO: identify the pipeline that return single object from $lookup pipeline instead of array. 
+// }
+
+DATA - TYPES
 //  everyting that json supports,
 
 // ObjectId
 // Timestamp
 // IsoDate
 
-
-
 authors = db.authors.find({})
 
-
 db.books.insert({
-    name:"Eat the Frog AGAIN",
+    name: "Eat the Frog AGAIN",
     authors: [
         ObjectId("62bd75b251cd41eeec3f2861"),
-         ObjectId("62bd75b251cd41eeec3f2862"),
-      ]
+        ObjectId("62bd75b251cd41eeec3f2862"),
+    ]
 })
 
 
 
+// Stage 1: Filter pizza order documents by pizza size
+// Stage 2: Group remaining documents by pizza name and calculate total quantity
 
+db.orders.find({})
+
+
+db.orders.aggregate([
+    {
+        $match: { size: "medium" }
+    },
+    {
+        $group: { _id: "$name", totalQuantity: { $sum: "$quantity" } }
+    }
+])
 
 
 
