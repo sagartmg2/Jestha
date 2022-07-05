@@ -16,32 +16,57 @@ mongoose.connect('mongodb://localhost:27017/school')
 
 app.use(express.json())
 
+app.get("/api/authors", async (req, res, next) => {
+
+    let authors = await Author.find();
+
+    res.send({ data: authors })
+
+})
 
 
 app.post("/api/authors", async (req, res, next) => {
-
-
     // Author.create({
     //     name: "john changed",
     //     email: "testing@testing.com",
     //     dob: Date()
     // }, (err, data) => {
     //     if (err) return next(err)
+    //         // connect authorsBook  
+
+    //         Book.create({},() => {
+    //             // callback
+    //         })
     //     res.send({ data })
     // })
-
+    // Callback Hell
     // db.authors.insert
-    let author = await Author.create({
-        name: "john changed finalllllll",
-        email: "testing@testing.com",
-        dob: Date(),
-        fullname:"John Doe"
-    })
 
-    console.log(author)
 
-    res.send({ data: author })
+    // try {
+    //     let a = b + c;
+    // } catch (err) {
+    //     console.log(err)
+    // }
 
+
+    // User.find({email:req.email})
+
+    try {
+        let author = await Author.create({
+            name: "john changed finalllllll",
+            email: "               testing@testing.com              ",
+            dob: "1212",
+            // role:"random",
+            books:["62bec84c25e9e8b982fb2c19","adsf"]
+            // full_name:"John Doe"
+        })
+        // book.create({authr})
+        console.log(author)
+        res.send({ data: author })
+    } catch (err) {
+        next(err)
+    }
 
 })
 
@@ -58,14 +83,18 @@ app.post("/api/authors", async (req, res, next) => {
 //     return next()
 // })
 
-app.use("", function (req, res) {
+app.use("", function (req, res, next) {
     console.log("404");
     res.status(404).send({ msg: "404 page not found" })
 })
 
 app.use("", function (err, req, res, next) {
-    console.log(req.body)
-    res.send(err)
+    // res.send(err)
+    res.send({
+        data: "Server Error",
+        error: err,
+        msg: err.message
+    })
 })
 
 app.listen(8000, (err, data) => {
