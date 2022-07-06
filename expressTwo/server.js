@@ -24,8 +24,17 @@ app.get("/api/authors", async (req, res, next) => {
 
 })
 
+// app.post("/api/signup")
 
 app.post("/api/authors", async (req, res, next) => {
+    
+    // db.authors.insert
+    // author = await Author.create({})
+    // // console.log(author) => <Promisie<Pending></Pending>
+    // console.log(author)
+
+
+
     // Author.create({
     //     name: "john changed",
     //     email: "testing@testing.com",
@@ -34,7 +43,7 @@ app.post("/api/authors", async (req, res, next) => {
     //     if (err) return next(err)
     //         // connect authorsBook  
 
-    //         Book.create({},() => {
+    //         // Book.create({},() => {
     //             // callback
     //         })
     //     res.send({ data })
@@ -53,18 +62,19 @@ app.post("/api/authors", async (req, res, next) => {
     // User.find({email:req.email})
 
     try {
+
         let author = await Author.create({
             name: "john changed finalllllll",
-            email: "               testing@testing.com              ",
+            email: "testing@testing.com",
             dob: "1212",
-            // role:"random",
-            books:["62bec84c25e9e8b982fb2c19","adsf"]
+            books:["62bec84c25e9e8b982fb2c19"]
             // full_name:"John Doe"
         })
         // book.create({authr})
-        console.log(author)
+        console.log("author", author)
         res.send({ data: author })
     } catch (err) {
+        res.statusCode = 400
         next(err)
     }
 
