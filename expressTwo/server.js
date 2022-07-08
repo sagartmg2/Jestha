@@ -3,6 +3,9 @@ const app = express()
 
 const mongoose = require('mongoose');
 const Author = require('./model/author');
+const User = require('./model/user');
+
+const bcrypt = require("bcrypt")
 
 
 // mongoose.connect('mongodb://localhost:27017/<datbase_name>');
@@ -16,6 +19,66 @@ mongoose.connect('mongodb://localhost:27017/school')
 
 app.use(express.json())
 
+app.get("/api/users", async (req, res) => {
+    try {
+
+        let user = await User.find().select("password")
+        res.send({ data: user })
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+
+app.post("/api/signup", async (req, res, next) => {
+
+
+    console.log(req.body)
+
+    // TODO: create a new user in db;
+    const hashed = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync());
+    try {
+
+        let user = await User.create({
+            email: req.body.email,
+            password: hashed
+        })
+        res.send({ data: user })
+    }
+    catch (err) {
+        next(err)
+    }
+
+})
+
+
+app.post("/api/login", async (req, res) => {
+    // Load hash from your password DB.
+
+    const {email,password,...rest} = req.body
+
+    const user = await User.findOne({email}).select("password");
+
+    if(!user){
+        // res.send({user})
+    }
+    // console.log({user})
+
+    let status = await bcrypt.compare(password, (user?.password || ""));
+
+    if(!user || !status){
+        res.send({msg:"Invalid Credentias"})
+    }
+
+    // TOKEN : send jwt token
+    // npm jsonwebtoken
+    // Authentication and authoriztion
+
+})
+
+
+
 app.get("/api/authors", async (req, res, next) => {
 
     let authors = await Author.find();
@@ -27,7 +90,7 @@ app.get("/api/authors", async (req, res, next) => {
 // app.post("/api/signup")
 
 app.post("/api/authors", async (req, res, next) => {
-    
+
     // db.authors.insert
     // author = await Author.create({})
     // // console.log(author) => <Promisie<Pending></Pending>
@@ -67,7 +130,7 @@ app.post("/api/authors", async (req, res, next) => {
             name: "john changed finalllllll",
             email: "testing@testing.com",
             dob: "1212",
-            books:["62bec84c25e9e8b982fb2c19"]
+            books: ["62bec84c25e9e8b982fb2c19"]
             // full_name:"John Doe"
         })
         // book.create({authr})
