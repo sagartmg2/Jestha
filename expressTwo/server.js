@@ -52,28 +52,48 @@ app.post("/api/signup", async (req, res, next) => {
 
 })
 
+app.get("/api/cookie",(req,res) => {
+    // console.log(req.query);
+    // console.log(req.params);
+    // console.log(req.body);
+
+    res.setHeader("set-cookie","value=success;value2=success2")
+    res.setHeader("set-cookie","value3=success3")
+
+    res.send({"hello":true})
+})
+
 
 app.post("/api/login", async (req, res) => {
     // Load hash from your password DB.
 
-    const {email,password,...rest} = req.body
+    const { email, password, ...rest } = req.body
 
-    const user = await User.findOne({email}).select("password");
+    const user = await User.findOne({ email }).select("password");
 
-    if(!user){
+    if (!user) {
         // res.send({user})
     }
     // console.log({user})
 
     let status = await bcrypt.compare(password, (user?.password || ""));
 
-    if(!user || !status){
-        res.send({msg:"Invalid Credentias"})
+    if (!user || !status) {
+        res.send({ msg: "Invalid Credentias" })
     }
+
+
+
 
     // TOKEN : send jwt token
     // npm jsonwebtoken
     // Authentication and authoriztion
+
+    // => http protocol 
+    // => stateless  // server doesnot store the request data 
+    // cookie-session => stateful 
+    // REST api, jsonweb-token -> stateless
+
 
 })
 
