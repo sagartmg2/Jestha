@@ -1,12 +1,23 @@
 const express = require('express')
 const app = express()
-
 const mongoose = require('mongoose');
 const Author = require('./model/author');
 const User = require('./model/user');
 
 const bcrypt = require("bcrypt")
+var cookieParser = require('cookie-parser')
 
+app.use(cookieParser("secret key"))
+
+var session = require('express-session')
+
+var jwt = require('jsonwebtoken');
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}))
 
 // mongoose.connect('mongodb://localhost:27017/<datbase_name>');
 mongoose.connect('mongodb://localhost:27017/school')
@@ -52,20 +63,63 @@ app.post("/api/signup", async (req, res, next) => {
 
 })
 
-app.get("/api/cookie",(req,res) => {
+app.get("/home", (req, res) => {
+    res.send("home")
+})
+
+app.get("/api/cookie", (req, res) => {
     // console.log(req.query);
     // console.log(req.params);
     // console.log(req.body);
 
-    res.setHeader("set-cookie","value=success;value2=success2")
-    res.setHeader("set-cookie","value3=success3")
+    // res.setHeader("set-cookie","value=success;value2=success2")
+    // res.setHeader("set-cookie","value3=success3")
 
-    res.send({"hello":true})
+    // res.cookie("key","value",{
+    //     path:"/api/cookie"
+    // })
+
+    //  res.cookie("global key","value",{
+    //         path:"/"
+    //     })
+    res.cookie("signed key", "value", {
+        path: "/",
+        httpOnly: true,
+        signed: true
+    })
+
+    console.log(req.cookies)
+    console.log(req.signedCookies)
+
+    res.cookie("global http only key", "value", {
+        path: "/",
+        httpOnly: true,
+    })
+
+    res.send({ "hello": false })
+})
+
+app.post("/api/resource", (req, res) => {
+    if (!req.session.user) {
+        return res.send("unauthenticated")
+    }
+    console.log("session_user", req.session.user)
+
+    // TODO: authenticated the user
+
+    res.send("resource")
 })
 
 
 app.post("/api/login", async (req, res) => {
     // Load hash from your password DB.
+    // req.session.user = req.body.email;
+
+    // console.log("session_user",req.session.user)
+
+    // res.send("logged in")
+
+    // return;
 
     const { email, password, ...rest } = req.body
 
@@ -82,7 +136,13 @@ app.post("/api/login", async (req, res) => {
         res.send({ msg: "Invalid Credentias" })
     }
 
+    // req.session.user = user;
+    console.log({user})
 
+    let user_info = await User.findOne({ email });
+    res.send({
+        access_token: jwt.sign(user.toObject(), 'shhhhh')
+    })
 
 
     // TOKEN : send jwt token
