@@ -68,6 +68,9 @@ app.get("/home", (req, res) => {
 })
 
 app.get("/api/cookie", (req, res) => {
+
+    // console.log(req.headers)
+    return;
     // console.log(req.query);
     // console.log(req.params);
     // console.log(req.body);
@@ -94,16 +97,34 @@ app.get("/api/cookie", (req, res) => {
     res.cookie("global http only key", "value", {
         path: "/",
         httpOnly: true,
+        maxAge:5 * 1000
     })
 
     res.send({ "hello": false })
 })
 
-app.post("/api/resource", (req, res) => {
-    if (!req.session.user) {
-        return res.send("unauthenticated")
+
+const authentication_middleware = (req,res,next) => {
+    let token = (req.headers.authorization.split(" ")[1])
+
+    var decoded = jwt.verify(token, 'shhhhh');
+
+    if(decoded){
+        return next();
     }
-    console.log("session_user", req.session.user)
+    
+    res.status(401).send({"msg":"Unauthenticated"})
+}
+
+app.post("/api/resource", authentication_middleware, (req, res) => {
+
+    // console.log("session_user", req.session.user)
+    // if (!req.session.user) {
+    //     return res.send("unauthenticated")
+    // }
+
+    
+
 
     // TODO: authenticated the user
 
@@ -140,8 +161,11 @@ app.post("/api/login", async (req, res) => {
     console.log({user})
 
     let user_info = await User.findOne({ email });
+
+    // process.env.JWT_SECRET
+
     res.send({
-        access_token: jwt.sign(user.toObject(), 'shhhhh')
+        access_token: jwt.sign(user.toObject(), process.env.JWT_SECRET,{expiresIn:10})
     })
 
 
