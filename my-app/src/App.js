@@ -3,6 +3,11 @@ import './App.css';
 
 import { Fragment } from "react"
 
+// import Button from './Button';
+import { SmallButton } from './Button';
+// object destructuring
+
+
 // default export and named export
 // commonjs 
 // ES6 module system
@@ -37,6 +42,21 @@ function App() {
   return <Fragment>
     <div>welcome</div>
     <div>welcome again</div>
+    {/* <Button
+      title="Big"
+    />
+    <Button
+      title="Small"
+    /> */}
+
+    
+    <SmallButton
+      title="custom title"
+      color="red"
+    >
+      <h1>small button</h1>
+    </SmallButton>
+
   </Fragment>
 }
 
