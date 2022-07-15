@@ -20,7 +20,7 @@ function SmallButton({ title, color, children }) {
     </>
 }
 
-function BigButton(props) {
+    function BigButton(props) {
     return <button>{"big"}</button>
 }
 // export default Button;
