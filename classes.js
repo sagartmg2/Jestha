@@ -75,10 +75,34 @@ class Cat extends Animal {
         super(name, has_fur, breed);
         // this.#behaviour = behaviour
     }
+    #behaviour = "value";
+
+    // setter and getter methods
+    setBehviour(value) {
+        this.#behaviour = value
+    }
+
+    getBehaviour() {
+        return this.#behaviour;
+    }
+
+    eat(one) {
+        console.log("licking...");
+    }
+
+    process() {
+        console.log("bend the legs")
+        console.log("jumping..")
+        console.log("always land on the legs..")
+    }
+
+    jump() {
+        this.process();
+    }
+
 }
 
 let cat1 = new Cat("cat", true, "breed1", "aggresive");
-
 
 console.log(cat1)
 
@@ -90,6 +114,8 @@ console.log(cat1)
 // console.log(animal1)
 
 
+
+/// method overloading , method overriding.
 
 
 

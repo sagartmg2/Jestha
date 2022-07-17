@@ -5,6 +5,7 @@ import { Fragment } from "react"
 
 // import Button from './Button';
 import { SmallButton } from './Button';
+import Car from './Car';
 // object destructuring
 
 
@@ -40,8 +41,11 @@ import { SmallButton } from './Button';
 
 function App() {
   return <Fragment>
-    <div>welcome</div>
-    <div>welcome again</div>
+
+    <Car name="tesla" />
+
+    {/* <div>welcome</div>
+    <div>welcome again</div> */}
     {/* <Button
       title="Big"
     />
@@ -49,13 +53,14 @@ function App() {
       title="Small"
     /> */}
 
-    
-    <SmallButton
+
+
+    {/* <SmallButton
       title="custom title"
       color="red"
     >
       <h1>small button</h1>
-    </SmallButton>
+    </SmallButton> */}
 
   </Fragment>
 }
