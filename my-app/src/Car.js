@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 export default class Car extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +39,6 @@ export default class Car extends Component {
     }
 
 
-
     // LIFECYLCEL methods
     componentDidMount() {
         console.log("ddimount");
@@ -52,10 +50,14 @@ export default class Car extends Component {
         // componet  still mounted{
         // => change the state 
         // } 
+
+        // => memory leak 
     }
 
     componentDidUpdate() {
         console.log("did update");
+
+        // this.state.count
 
     }
 
@@ -66,7 +68,6 @@ export default class Car extends Component {
 
         // } 
     }
-
 
     render() {
         console.log("rendering");
@@ -84,6 +85,4 @@ export default class Car extends Component {
             </>
         )
     }
-
-
 }

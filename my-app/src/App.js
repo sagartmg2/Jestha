@@ -6,6 +6,7 @@ import { Fragment } from "react"
 // import Button from './Button';
 import { SmallButton } from './Button';
 import Car from './Car';
+import Home from './Home';
 // object destructuring
 
 
@@ -42,7 +43,8 @@ import Car from './Car';
 function App() {
   return <Fragment>
 
-    <Car name="tesla" />
+    {/* <Car name="tesla" /> */}
+    <Home title="home page" />
 
     {/* <div>welcome</div>
     <div>welcome again</div> */}
