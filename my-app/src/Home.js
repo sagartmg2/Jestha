@@ -12,7 +12,6 @@ export default function Home(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-
     const [state, setState] = useState({
         username: "john",
         password: ""
@@ -78,13 +77,32 @@ export default function Home(props) {
         // setCount(count + 2)
     }
 
-    function handleChange(e) {
+    function handleChangeOld(e) {
         console.log(e.target.value)
         // 
         setState({
             username: e.target.value
         })
     }
+
+    const handleChange = (e) => {
+        console.log(e.target.name);
+        // const name = e.target.name;
+        // const value = e.target.value;
+
+        const { name, value } = e.target
+        //console.log(name,value);
+        setState((prev) => {
+            return ({ ...prev, [name]: value })
+        })
+
+        // obj = {a:1,b:2}
+        // obj.a = 
+        // obj["a"] = 
+
+        // Object.
+
+    };
 
     console.log("rendering...");
 
@@ -99,8 +117,8 @@ export default function Home(props) {
             <button onClick={increment}>increment</button>
 
             <form>
-                <input value={state.username} onChange={handleChange} />
-                <input value={state.password} onChange={handleChange} />
+                <input value={state.username} name="username" onChange={handleChange} />
+                <input value={state.password} name="password" onChange={handleChange} />
 
                 {/* <input value={useranme} onChange={() => setUsername("e.asdfasdfasdfafdst.value")} /> */}
                 {/* <input value={password} onChange={(e) => setPassword(e.target.value)} /> */}

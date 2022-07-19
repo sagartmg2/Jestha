@@ -9,6 +9,14 @@ import Car from './Car';
 import Home from './Home';
 // object destructuring
 
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import Team from './Team';
+
 
 // default export and named export
 // commonjs 
@@ -43,8 +51,32 @@ import Home from './Home';
 function App() {
   return <Fragment>
 
+    <div>
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <ul class="">
+            <Link to="/">Home</Link> |{" "}
+            <Link to="login">login</Link>|{" "}
+            <Link to="teams">Teams</Link>|{" "}
+            <Link to="teams/id">Teams</Link>|{" "}
+            <Link to="teams/new">Teams</Link>|{" "}
+          </ul>
+        </div>
+      </nav>
+      <Routes>
+        <Route path="/" element={<h1>home</h1>} />
+        <Route path="login" element={<h1>login</h1>} />
+        {/* <Route path="teams/:slug" element={<h1>show spieci</h1>} /> */}
+        {/* <Route path="teams" element={<h1>Teams </h1>}> */}
+        <Route path="teams" >
+          <Route index element={<h1>Team </h1>} />
+          <Route path=":teamId" element={<Team/>} />
+          <Route path="new" element={<h1>NewTeamForm </h1>} />
+        </Route>
+      </Routes>
+    </div >
     {/* <Car name="tesla" /> */}
-    <Home title="home page" />
+    {/* <Home title="home page" /> */}
 
     {/* <div>welcome</div>
     <div>welcome again</div> */}
@@ -64,7 +96,7 @@ function App() {
       <h1>small button</h1>
     </SmallButton> */}
 
-  </Fragment>
+  </Fragment >
 }
 
 export default App;
