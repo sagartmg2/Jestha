@@ -1,8 +1,12 @@
 
 
-function Button(props) {
+
+
+// props drilling
+
+export default function Button(props) {
     console.log("button rendering.");
-    return <button>{props.title}</button>
+    return <button>{props.auth ? "logout" : "fetch datas"}</button>
 }
 
 // function SmallButton(props) {
@@ -14,13 +18,15 @@ function SmallButton({ title, color, children }) {
         backgroundColor: "red"
     }
 
+    
+
     return <>
         {children}
         <button className={color} style={style_obj}  >{title}</button>
     </>
 }
 
-    function BigButton(props) {
+function BigButton(props) {
     return <button>{"big"}</button>
 }
 // export default Button;

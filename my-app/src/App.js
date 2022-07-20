@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 
 // import Button from './Button';
 import { SmallButton } from './Button';
@@ -16,6 +16,8 @@ import {
   Link
 } from "react-router-dom";
 import Team from './Team';
+import ProtectedRoute from './ProtectedRoute';
+import ReducerCounter from './ReducerCounter';
 
 
 // default export and named export
@@ -49,8 +51,14 @@ import Team from './Team';
 // );
 
 function App() {
-  return <Fragment>
 
+  const [auth, setAuth] = useState(true);
+
+
+
+
+  return <ReducerCounter />
+  return <Fragment>
     <div>
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
@@ -68,9 +76,9 @@ function App() {
         <Route path="login" element={<h1>login</h1>} />
         {/* <Route path="teams/:slug" element={<h1>show spieci</h1>} /> */}
         {/* <Route path="teams" element={<h1>Teams </h1>}> */}
-        <Route path="teams" >
+        <Route path="teams" element={<ProtectedRoute />} >
           <Route index element={<h1>Team </h1>} />
-          <Route path=":teamId" element={<Team/>} />
+          <Route path=":teamId" element={<Team auth={auth} />} />
           <Route path="new" element={<h1>NewTeamForm </h1>} />
         </Route>
       </Routes>
