@@ -18,7 +18,9 @@ import {
 import Team from './Team';
 import ProtectedRoute from './ProtectedRoute';
 import ReducerCounter from './ReducerCounter';
-
+import { useSelector, useDispatch } from 'react-redux'
+import Auth from './Auth';
+import Counter from './Couter';
 
 // default export and named export
 // commonjs 
@@ -53,8 +55,17 @@ import ReducerCounter from './ReducerCounter';
 function App() {
 
   const [auth, setAuth] = useState(true);
+  // const count = useSelector((state) => state.counter.value)
+  // const dispatch = useDispatch()
 
 
+  return <>
+    <Counter/>
+    <hr></hr>
+    <Auth />
+  </>
+
+ 
 
 
   return <ReducerCounter />
