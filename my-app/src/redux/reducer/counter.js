@@ -22,6 +22,14 @@ export const counterSlice = createSlice({
   },
 })
 
+export const delayIncrement = () => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(increment());
+    }, 1000)
+  }
+}
+
 // Action creators are generated for each case reducer function
 export const { increment, decrement, incrementByAmount } = counterSlice.actions
 
