@@ -1,14 +1,21 @@
 const express = require("express")
+const mongoose = require("mongoose") 
+
 const app = express();
 
 require('dotenv').config()
+
+mongoose.connect('mongodb://localhost:27017/ecommerce')
+.then(res => {
+    console.log("mongodb connected")
+})
+
 
 const users_route = require('./route/user')
 const products_route = require('./route/product')
 
 app.use("/api/users",users_route)
 app.use("/api/products",products_route)
-
 
 app.listen(process.env.PORT, (data, err) => {
     if (err) {
