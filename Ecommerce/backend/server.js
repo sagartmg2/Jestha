@@ -1,12 +1,15 @@
 const express = require("express")
 const mongoose = require("mongoose")
-
-const users_route = require('./route/user')
-const products_route = require('./route/product')
+const cors = require("cors");
 
 const app = express();
 app.use(express.json()); // read the body content of our request 
 require('dotenv').config() // to .env files
+app.use(cors()) // handle cross origin resource sharing 
+// app.use(cors({options for specific domain and ports})) // handle cross origin resource sharing 
+
+const users_route = require('./route/user')
+const products_route = require('./route/product')
 
 /* connnection to our database */
 mongoose.connect('mongodb://localhost:27017/ecommerce')
@@ -35,12 +38,12 @@ app.use((err, req, res, next) => {
         let errors = {};
         // make error format same as express-validator
         Object.keys(err.errors).forEach((key) => {
-            console.log({key});
+            console.log({ key });
             errors[key] = err.errors[key].message;
         });
 
         return res.status(400).send({
-            message:err.name,
+            message: err.name,
             errors
         });
     }
@@ -48,7 +51,7 @@ app.use((err, req, res, next) => {
 
     return res.status(500).send({
         message: err.message,
-        errors:err
+        errors: err
     })
 })
 

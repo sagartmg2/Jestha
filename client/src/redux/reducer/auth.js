@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    is_logged_in: true,
+    is_logged_in: false,
     user:{
       role:"buyer"
     },
@@ -18,7 +18,6 @@ export const authSlice = createSlice({
     setUser:(state,action) => {
       state.user = action.payload
     }
-   
   },
 })
 

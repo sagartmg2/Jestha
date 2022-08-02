@@ -23,7 +23,11 @@ const signup = async (req, res, next) => {
         })
 
         if (user) {
-            return res.send(user)
+            // user// => as mongoose object
+            let user_obj = user.toObject();
+            delete user_obj.password;
+            
+            return res.send(user_obj)
         }
     }
     catch (err) {
