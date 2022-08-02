@@ -71,9 +71,9 @@ function App() {
   return <ReducerCounter />
   return <Fragment>
     <div>
-      <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-          <ul class="">
+      <nav className="navbar navbar-expand-lg bg-light">
+        <div className="container-fluid">
+          <ul className="">
             <Link to="/">Home</Link> |{" "}
             <Link to="login">login</Link>|{" "}
             <Link to="teams">Teams</Link>|{" "}

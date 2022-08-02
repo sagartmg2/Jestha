@@ -7,7 +7,7 @@ const ObjectId = Schema.ObjectId;
 const UserSchema = new Schema({
     name:{
         type:String,
-        require:true,
+        required:true,
     },
     email:{
         type:String,
@@ -18,6 +18,7 @@ const UserSchema = new Schema({
         type:String,
         required:true,
         minLength:8,
+        select:false,
     },
     address:{
       type:String,  
@@ -28,12 +29,10 @@ const UserSchema = new Schema({
     },
     kyc:{
         citizenship_number:String,
-    }
+    },
 });
 
 module.exports  = mongoose.model("User",UserSchema)
-
-
 
 // provinces =[
 //     {
