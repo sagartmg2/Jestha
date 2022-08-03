@@ -9,13 +9,14 @@ app.use(cors()) // handle cross origin resource sharing
 // app.use(cors({options for specific domain and ports})) // handle cross origin resource sharing 
 
 const users_route = require('./route/user')
-const products_route = require('./route/product')
+const products_route = require('./route/product');
 
 /* connnection to our database */
 mongoose.connect('mongodb://localhost:27017/ecommerce')
     .then(res => {
         console.log("mongodb connected")
     })
+
 
 
 app.use("/api/users", users_route)
@@ -47,11 +48,12 @@ app.use((err, req, res, next) => {
             errors
         });
     }
-
+    // console.log(err.)
 
     return res.status(500).send({
         message: err.message,
-        errors: err
+        errors: err,
+        stack:err.stack,
     })
 })
 

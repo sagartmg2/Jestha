@@ -2,9 +2,13 @@ import React, { useState } from 'react'
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Alert from '../component/Alert';
+import { setUser, login } from '../redux/reducer/auth';
+import { useDispatch } from 'react-redux';
+
 
 function Login() {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     // store to localstorage and to redux store
     const [loading, setLoading] = useState(false);
@@ -33,6 +37,8 @@ function Login() {
         axios.post(url, data)
             .then(res => {
                 localStorage.setItem("access_token", res.data.access_token)
+
+                dispatch(login())
                 navigate("/")
             })
             .catch(err => {

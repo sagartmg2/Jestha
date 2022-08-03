@@ -26,7 +26,7 @@ const signup = async (req, res, next) => {
             // user// => as mongoose object
             let user_obj = user.toObject();
             delete user_obj.password;
-            
+
             return res.send(user_obj)
         }
     }
@@ -35,11 +35,12 @@ const signup = async (req, res, next) => {
     }
 
 }
+
 const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Load hash from your password DB.
-    let user = await User.findOne({ email }).select(["name","password","role"]);
+    let user = await User.findOne({ email }).select(["name", "password", "role"]);
     let status = await bcrypt.compare(password, (user?.password || ""));
 
     if (!user || !status) {
@@ -59,9 +60,20 @@ const login = async (req, res, next) => {
 
 }
 
-// module.exports = signup
+const getUser = async (req, res, next) => {
+
+    try {
+        const user = await User.findById(req.decoded_token._id);
+        res.send(user)
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
 
 module.exports = {
     signup,
     login,
+    getUser,
 }

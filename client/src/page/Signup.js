@@ -3,10 +3,18 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import { roles } from "../constants/role"
+import ErrorMessage from '../component/ErrorMessage';
 
 function Signup() {
 
   let navigate = useNavigate();
+
+  const [validation_errors, setValidationErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+  })
 
   // store to localstorage and to redux store
   const [state, setState] = useState({
@@ -31,7 +39,10 @@ function Signup() {
         navigate("/login")
       })
       .catch(err => {
-          
+        let mapped_errors = err.response.data.errors.map(el => {
+          return {[el.param]:el.msg}
+        })
+        setValidationErrors( Object.assign( {},...mapped_errors))
       })
   }
 
@@ -44,23 +55,31 @@ function Signup() {
     <div className='container mt-5'>
       <div className='row mt-5 justify-content-center'>
         <form onSubmit={handleSubmit} className="mt-5 col-8">
+          <h1 className='text-center'>Login</h1>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
             <input type="text" name='name' value={state.name} className="form-control" onChange={handleChange} />
+            <ErrorMessage message={validation_errors.name} />
+
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
             <input type="text" name='email' value={state.email} className="form-control" onChange={handleChange} />
+            <ErrorMessage message={validation_errors.email} />
           </div>
           <div className="mb-3">
             <label htmlFor='password' className="form-label">Password</label>
             <input id="password" className="form-control" type="password" name='password' value={state.password} onChange={handleChange} />
+            <ErrorMessage message={validation_errors.password} />
+
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">Role</label>
             <select name='role' className="form-control" onChange={handleChange}>
               {roles_mapping}
             </select>
+            <ErrorMessage message={validation_errors.role} />
+
           </div>
           {/* <input type="checkbox" name="terms" /> */}
           {/* // todo : try to handle checkbox on onChange */}

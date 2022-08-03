@@ -4,24 +4,24 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     is_logged_in: false,
-    user:{
-      role:"buyer"
+    user: {
     },
   },
   reducers: {
-    login: (state,action) => {
-      state.value = true
+    login: (state, action) => {
+      state.is_logged_in = true
     },
     logout: (state) => {
-      state.value = false
+      state.is_logged_in = false
     },
-    setUser:(state,action) => {
+    setUser: (state, action) => {
+      console.log(action.payload)
       state.user = action.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { login,logout,setUser} = authSlice.actions
+export const { login, logout, setUser } = authSlice.actions
 
 export default authSlice.reducer

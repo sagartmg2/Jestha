@@ -1,4 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
 import Signup from './page/Signup';
 import Login from './page/Login';
 import Home from './page/Home';
@@ -10,8 +12,35 @@ import Index from "./page/Product/Index";
 import PageNotFound from "./component/PageNotFound";
 import Dashboard from "./page/Dashboard";
 import { roles } from "./constants/role";
+import { useDispatch } from "react-redux";
+import { setUser, login, logout } from "./redux/reducer/auth";
+import axios from "axios";
 
 function App() {
+  const dispatch = useDispatch();
+
+
+  /* load logged user when page refresh  */
+  if (localStorage.getItem("access_token")) {
+    dispatch(login())
+
+    // get user from token 
+    axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/users/get-user`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token")
+      }
+    })
+      .then(res => {
+        dispatch(login())
+        dispatch(setUser(res.data))
+      })
+      .catch(err => {
+        dispatch(logout())
+      })
+  } else {
+    dispatch(logout())
+  }
+
   return (
     <div className="">
       <Navbar />
