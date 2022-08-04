@@ -37,7 +37,7 @@ const ProductSchema = new Schema({
     reviews: [{
         user: {
             // type: ObjectId,
-            name:String
+            type:String
         },
         rating: {
             type: Number,
@@ -48,6 +48,7 @@ const ProductSchema = new Schema({
             type: String,
             maxLength: 255,
         },
+        created_at: Date,
     }],
     created_by:{
         type:ObjectId,

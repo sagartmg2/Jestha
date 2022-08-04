@@ -10,28 +10,53 @@ export default function Store() {
         description: "description",
         brands: "levis,adidas",
         categories: "electornics,ev",
+        photos: {}
     });
 
     function handleChange(e) {
-        setState({ ...state, [e.target.name]: e.target.value })
+        if (e.target.type == "file") {
+            setState({ ...state, [e.target.name]: e.target.files })
+        } else {
+            setState({ ...state, [e.target.name]: e.target.value })
+        }
+
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        let { name, price, in_stock, description, brands, categories } = state
+
+
+
+        let { name, price, in_stock, description, brands, categories, photos } = state
         brands = brands.split(",")
         categories = categories.split(",")
         let data = { name, price, in_stock, description, brands, categories }
 
         let url = `${process.env.REACT_APP_SERVER_DOMAIN}/products`
 
-        // => base64 
-        
-        // formdata
-        // let formdata = new FormData();
-        // formdata.append("name",name)
+        let formdata = new FormData();
+        formdata.append("name", name)
+        formdata.append("price", price)
+        formdata.append("in_stock", in_stock);
+        formdata.append("description", description);
+        formdata.append("brands", brands);
+        formdata.append("categories", categories);
 
-        axios.post(url, data)
+
+        // console.log(typeof (state.photos))
+        // console.log(Array.isArray(state.photos))
+        let arr = Object.entries(state.photos)
+        // console.log({ arr })
+
+        arr.forEach(el => {
+            formdata.append("photos", el[1]);
+        })
+
+        axios.post(url, formdata, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
             .then(res => {
 
             })
@@ -72,6 +97,11 @@ export default function Store() {
                     <div className="mb-3">
                         <label htmlFor="" className="form-label">categories</label>
                         <input type="text" name='categories' className='form-control' value={state.categories} onChange={handleChange} />
+                    </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="" className="form-label">Images</label>
+                        <input type="file" multiple name='photos' className='form-control' onChange={handleChange} />
                     </div>
 
                     <button type="submit" className="btn btn-primary">Submit</button>

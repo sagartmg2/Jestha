@@ -12,6 +12,7 @@ router.get("/sellers", validateAccessToken, sellerIndex)
 router.get("/:id", show)
 router.post("/", validateAccessToken, multer_arr_upload, store)
 router.put("/:id", validateAccessToken, multer_arr_upload, update)
+router.put("/review/:id",  updateReview)
 router.delete("/:id", validateAccessToken, deleteProduct)
 
 module.exports = router

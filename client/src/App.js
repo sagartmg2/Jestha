@@ -1,6 +1,8 @@
 import { Routes, Route, Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
+import "./App.css"
 import Signup from './page/Signup';
 import Login from './page/Login';
 import Home from './page/Home';
@@ -14,7 +16,8 @@ import Dashboard from "./page/Dashboard";
 import { roles } from "./constants/role";
 import { useDispatch } from "react-redux";
 import { setUser, login, logout } from "./redux/reducer/auth";
-import axios from "axios";
+import Checkout from "./page/Checkout";
+import Store from "./page/Product/Store";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +57,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route element={<ProtectedRoute />} >
           <Route path="orders" element={<Order />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
         <Route element={<ProtectedRoute
           access_to={roles.SELLER}
@@ -62,6 +66,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="products">
               <Route index element={<Index />} />
+              <Route path="store" element={<Store />} />
               <Route path=":id" element={<Show />} />
             </Route>
           </Route>
