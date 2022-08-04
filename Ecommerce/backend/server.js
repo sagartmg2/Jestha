@@ -17,8 +17,6 @@ mongoose.connect('mongodb://localhost:27017/ecommerce')
         console.log("mongodb connected")
     })
 
-
-
 app.use("/api/users", users_route)
 app.use("/api/products", products_route)
 

@@ -4,27 +4,57 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const ProductSchema = new Schema({
-    name:{
-        type:String,
-        required:true,
+    name: {
+        type: String,
+        required: true,
     },
-    price:{
-        type:Decimal128,
-        requried:true,
+    price: {
+        type: Number,
+        requried: true,
+        validate: {
+            validator: function (v) {
+                return typeof (v) == "number" && v > 0
+            },
+            message: props => `${props.value} is not a valid  number!`
+        },
     },
-    in_stock:{
-        type:Number,
-        default:0
+    in_stock: {
+        type: Number,
+        default: 0,
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
     },
-    brands:{
-        type:Array,
+    categories: {
+        type: Array
     },
-    categories:{
-        type:Array
+    brands: [],
+    images:[{
+        originalname:String,
+        mimetype:String,
+        buffer:Buffer
+    }],
+    reviews: [{
+        user: {
+            // type: ObjectId,
+            name:String
+        },
+        rating: {
+            type: Number,
+            min: 0,
+            max: 5,
+        },
+        comment: {
+            type: String,
+            maxLength: 255,
+        },
+    }],
+    created_by:{
+        type:ObjectId,
+        ref:"User"
     }
+},{
+    timestamps:true,
 });
 
-module.exports  = mongoose.model("Product",ProductSchema)
+module.exports = mongoose.model("Product", ProductSchema)

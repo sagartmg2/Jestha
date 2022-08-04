@@ -33,10 +33,12 @@ const validateAccessToken = (req, res, next) => {
 
   try {
 
-    let token = req.headers.authorization.split(" ")[1];
+    let token = req.headers?.authorization?.split(" ")[1];
 
-    var decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    let decoded;
+    if (token) {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    }
     if (decoded) {
       req.decoded_token = decoded
       next()
@@ -49,6 +51,11 @@ const validateAccessToken = (req, res, next) => {
   } catch (err) {
     next(err)
   }
+}
+
+const validSeller = (req, res, next) => {
+
+  next();
 }
 
 module.exports = {

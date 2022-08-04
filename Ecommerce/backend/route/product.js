@@ -1,24 +1,17 @@
 const express = require('express')
+const { index, sellerIndex, show, store, update, deleteProduct, updateReview } = require('../controller/product')
 const router = express.Router()
 
-router.get("", (req, res, next) => {
-   res.send("get products")
-})
 
-router.get("/:id", (req, res, next) => {
-   res.send("get one product")
-})
+const multer_arr_upload = require("../middleware/multer")
+const { validateAccessToken } = require('../middleware/auth')
 
-router.post("", (req, res, next) => {
-   res.send("products")
-})
 
-router.put("/:id", (req, res, next) => {
-   res.send(req.params)
-})
-
-router.delete("/:id", (req, res, next) => {
-   res.send("put one product")
-})
+router.get("", index)
+router.get("/sellers", validateAccessToken, sellerIndex)
+router.get("/:id", show)
+router.post("/", validateAccessToken, multer_arr_upload, store)
+router.put("/:id", validateAccessToken, multer_arr_upload, update)
+router.delete("/:id", validateAccessToken, deleteProduct)
 
 module.exports = router
