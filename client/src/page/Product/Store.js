@@ -25,8 +25,6 @@ export default function Store() {
     function handleSubmit(e) {
         e.preventDefault();
 
-
-
         let { name, price, in_stock, description, brands, categories, photos } = state
         brands = brands.split(",")
         categories = categories.split(",")

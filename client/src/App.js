@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { setUser, login, logout } from "./redux/reducer/auth";
 import Checkout from "./page/Checkout";
 import Store from "./page/Product/Store";
+import Update from "./page/Product/Update";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,11 +64,13 @@ function App() {
           access_to={roles.SELLER}
         />} >
           <Route path="sellers">
-            <Route index element={<Dashboard />} />
+            {/* <Route index element={<Dashboard />} /> */}
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="products">
               <Route index element={<Index />} />
               <Route path="store" element={<Store />} />
               <Route path=":id" element={<Show />} />
+              <Route path="edit/:id" element={<Update />} />
             </Route>
           </Route>
         </Route>

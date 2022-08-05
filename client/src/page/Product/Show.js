@@ -65,7 +65,7 @@ export default function Show() {
           <p>stock:{product?.in_stock}</p>
 
           {
-            user.role == roles.BUYER
+            user.role != roles.SELLER
             &&
             <button type='button' className='btn btn-primary' onClick={handleAddToCart}>Add to Cart</button>
           }

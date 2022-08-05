@@ -7,6 +7,8 @@ app.use(express.json()); // read the body content of our request
 require('dotenv').config() // to .env files
 app.use(cors()) // handle cross origin resource sharing 
 // app.use(cors({options for specific domain and ports})) // handle cross origin resource sharing 
+var methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 
 const users_route = require('./route/user')
 const products_route = require('./route/product');
@@ -17,8 +19,12 @@ mongoose.connect('mongodb://localhost:27017/ecommerce')
         console.log("mongodb connected")
     })
 
+
+
+
 app.use("/api/users", users_route)
 app.use("/api/products", products_route)
+app.use("/api/orders", products_route)
 
 
 /* handle errors */
@@ -51,7 +57,7 @@ app.use((err, req, res, next) => {
     return res.status(500).send({
         message: err.message,
         errors: err,
-        stack:err.stack,
+        stack: err.stack,
     })
 })
 

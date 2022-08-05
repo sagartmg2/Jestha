@@ -38,8 +38,23 @@ const store = async (req, res) => {
 }
 
 
-const update = async () => {
+const update = async (req, res, next) => {
     const { name, price, in_stock, description, categories, brands } = req.body;
+
+    // console.log(req.body);
+    // res.send("1212")
+    // return;
+    // console.log(req.files);
+    
+    console.log(req.body?.images?.length)
+    
+
+    let old_images = [];
+    if (req.body?.images) {
+        old_images = req.body.images.map(el => {
+            return JSON.parse(el);
+        })
+    }
 
     let product = await Product.findByIdAndUpdate(req.params.id, {
         name,
@@ -48,7 +63,12 @@ const update = async () => {
         description,
         categories,
         brands,
+        images: [...old_images, ...req.files]
     }, { new: true })
+
+    // console.log({ product })
+    // res.send({data:{}})
+    // return
 
     res.send({ data: product })
     return
