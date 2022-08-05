@@ -81,6 +81,8 @@ export default function Update() {
 
             }
         })
+        // formdata.append("_method", "PUT");
+
 
         axios.post(url, formdata, {
             headers: {

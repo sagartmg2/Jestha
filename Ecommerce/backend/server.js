@@ -7,6 +7,7 @@ app.use(express.json()); // read the body content of our request
 require('dotenv').config() // to .env files
 app.use(cors()) // handle cross origin resource sharing 
 // app.use(cors({options for specific domain and ports})) // handle cross origin resource sharing 
+
 var methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
@@ -19,9 +20,6 @@ mongoose.connect('mongodb://localhost:27017/ecommerce')
     .then(res => {
         console.log("mongodb connected")
     })
-
-
-
 
 app.use("/api/users", users_route)
 app.use("/api/products", products_route)

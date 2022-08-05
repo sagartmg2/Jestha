@@ -6,13 +6,18 @@ const ObjectId = Schema.ObjectId;
 const OrderSchema = new Schema({
     status: {
         type: String,
-        enum: ["pending,shipped,rejected"]
+        enum: ["pending", "shipped", "rejected"],
+        default: "pending"
     },
     products: [
         {
             name: String,
             price: Number,
             quantity: Number,
+            _id: {
+                type: ObjectId,
+                ref: "Product"
+            }
         }
     ],
     created_by: {

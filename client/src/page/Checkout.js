@@ -1,10 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 import axios from "axios"
+import { clearCart } from '../redux/reducer/cart'
 
 export default function Checkout() {
     const { items: cart_items } = useSelector((state) => state.cart)
+
+    const dispatch = useDispatch();
 
     let total_price = 0;
     let cart_items_mappig = cart_items.map((el, index) => {
@@ -27,6 +31,8 @@ export default function Checkout() {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }
+        }).then(res => {
+            dispatch(clearCart())
         })
     }
 

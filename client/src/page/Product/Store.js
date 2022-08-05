@@ -40,7 +40,6 @@ export default function Store() {
         formdata.append("brands", brands);
         formdata.append("categories", categories);
 
-
         // console.log(typeof (state.photos))
         // console.log(Array.isArray(state.photos))
         let arr = Object.entries(state.photos)

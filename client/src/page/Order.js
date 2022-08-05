@@ -13,6 +13,9 @@ export default function Order() {
     })
       .then(res => {
 
+
+        // clear cart list
+
       })
       .catch(err => {
         console.log(err)
