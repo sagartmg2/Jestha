@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import axios from "axios"
+
 export default function Checkout() {
     const { items: cart_items } = useSelector((state) => state.cart)
 
@@ -14,6 +16,19 @@ export default function Checkout() {
             <td>{el.price * el.quantity}</td>
         </tr>
     })
+
+
+    function placeOrder() {
+        let url = `${process.env.REACT_APP_SERVER_DOMAIN}/orders`
+        let data = {
+            products: cart_items
+        }
+        axios.post(url, data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+    }
 
     return (
         <div className="container mt-5">
@@ -38,7 +53,7 @@ export default function Checkout() {
             {
                 cart_items.length > 0
                 &&
-                <button className="btn btn-primary">place order</button>
+                <button type="button" onClick={placeOrder} className="btn btn-primary">place order</button>
             }
         </div>
     )

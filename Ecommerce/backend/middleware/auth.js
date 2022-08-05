@@ -49,6 +49,7 @@ const validateAccessToken = (req, res, next) => {
       })
     }
   } catch (err) {
+    res.status_code = 401
     next(err)
   }
 }

@@ -12,6 +12,7 @@ app.use(methodOverride('_method'))
 
 const users_route = require('./route/user')
 const products_route = require('./route/product');
+const orders_route = require('./route/order');
 
 /* connnection to our database */
 mongoose.connect('mongodb://localhost:27017/ecommerce')
@@ -24,7 +25,7 @@ mongoose.connect('mongodb://localhost:27017/ecommerce')
 
 app.use("/api/users", users_route)
 app.use("/api/products", products_route)
-app.use("/api/orders", products_route)
+app.use("/api/orders", orders_route)
 
 
 /* handle errors */
@@ -52,9 +53,9 @@ app.use((err, req, res, next) => {
             errors
         });
     }
-    // console.log(err.)
 
-    return res.status(500).send({
+    let status_code = res.status_code || 500;
+    return res.status(status_code).send({
         message: err.message,
         errors: err,
         stack: err.stack,

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { roles } from "../constants/role"
 
 export default function Navbar() {
-    const { user } = useSelector((state) => state.auth)
+    const { user,is_logged_in } = useSelector((state) => state.auth)
 
     let { pathname } = useLocation();
 
@@ -105,6 +105,11 @@ export default function Navbar() {
                                 <p className="mb-0">{user.email}</p>
                             </div>
 
+                        }
+                        {
+                            !is_logged_in
+                            &&
+                            <Link to="/login">login</Link>
                         }
                     </div>
                 </div>

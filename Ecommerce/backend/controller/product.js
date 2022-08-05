@@ -41,13 +41,6 @@ const store = async (req, res) => {
 const update = async (req, res, next) => {
     const { name, price, in_stock, description, categories, brands } = req.body;
 
-    // console.log(req.body);
-    // res.send("1212")
-    // return;
-    // console.log(req.files);
-    
-    console.log(req.body?.images?.length)
-    
 
     let old_images = [];
     if (req.body?.images) {
